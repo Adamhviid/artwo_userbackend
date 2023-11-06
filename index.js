@@ -8,7 +8,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.get("/", (req, res) => {
-  res.send("Hello World!");
+  res.send("Hello World! + rasmus");
 });
 
 app.get("/endpoint", (req, res) => {
