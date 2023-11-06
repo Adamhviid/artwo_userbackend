@@ -58,5 +58,5 @@ jobs:
         with:
           app-name: 'artwo'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_8D835AFA0C7D4F86983B71A6835EFA2C }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_8F077E29CEEE436DBC5DF5C8C762A6DD }}
           package: .
