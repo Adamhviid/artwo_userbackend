@@ -2,16 +2,17 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 
-import login from "./src/routes/user/login.js";
-import register from "./src/routes/user/register.js";
+import auth from "./src/routes/user/auth.js";
+import crud from "./src/routes/user/crud.js";
 
 const app = express();
+
 app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 
-app.use('/auth', login)
-app.use('/auth', register)
+app.use('/auth', auth)
+app.use('/user', crud)
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
