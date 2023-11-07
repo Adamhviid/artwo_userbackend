@@ -1,18 +1,17 @@
 import express from "express";
 import * as dotenv from "dotenv";
 dotenv.config();
-
-import GetUser from "../../services/user/getById.js";
+import GetPost from "../../services/post/getById";
 /* import verifyToken from '../../Middleware/verifyToken.js' */
 
 const router = express.Router();
 
 router.get(
-  "/user/:id",
+  "/post/:id",
   /* verifyToken, */ async (res) => {
     const id = req.params.id;
 
-    GetUser(user.email)
+    GetUser(post.id)
       .then((result) => {
         res.status(200).json(result);
       })
