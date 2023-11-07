@@ -2,19 +2,21 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 
+import login from "./src/routes/user/login.js";
+import register from "./src/routes/user/register.js";
+
 const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 
+app.use('/auth', login)
+app.use('/auth', register)
+
 app.get("/", (req, res) => {
-  res.send("Hello World! + rasmus");
+  res.send("Hello World!");
 });
 
-app.get("/endpoint", (req, res) => {
-  res.send("Endnu flere endpoints!");
-});
-
-app.listen(process.env.PORT || 8181, () => {
-  console.log(`Server listening on port ${process.env.PORT || 8181}...`);
+app.listen(process.env.PORT || 8080, () => {
+  console.log(`Server listening on port ${process.env.PORT || 8080}...`);
 });
