@@ -3,6 +3,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import auth from "./src/routes/user/auth.js";
 import crud from "./src/routes/user/crud.js";
+import crudPost from "./src/routes/post/crudPost.js";
 
 const app = express();
 
@@ -12,6 +13,7 @@ app.use(cookieParser());
 
 app.use("/auth", auth);
 app.use("/user", crud);
+app.use("/post", crudPost);
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
