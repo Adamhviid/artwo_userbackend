@@ -1,16 +1,16 @@
-/* import auth from "../../config/firebase.js";
+import jwt from 'jsonwebtoken';
 
-export const VerifyToken = async (req, res, next) => {
-  const token = req.headers.authorization.split(" ")[1];
+export default async function VerifyToken(req, res, next) {
+    try {
+        const verify = jwt.verify(req.headers.token, process.env.JWT_TOKEN_SECRET);
 
-  try {
-    const decodeValue = await auth.verifyIdToken(token);
-    if (decodeValue) {
-      req.user = decodeValue;
-      return next();
+        if (verify) {
+            req.user = verify;
+            return next();
+        }
+
+    } catch (e) {
+        return res.status(401).json("Ugyldig token");
     }
-  } catch (e) {
-    return res.json({ message: "Not signed in" });
-  }
-};
- */
+
+}

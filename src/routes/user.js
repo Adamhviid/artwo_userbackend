@@ -5,7 +5,7 @@ import get from '../services/user/crud/get.js'
 import update from '../services/user/crud/update.js'
 import login from "../services/user/auth/login.js";
 import register from "../services/user/auth/register.js";
-/* import verifyToken from '../../Middleware/verifyToken.js' */
+import verifyToken from "../middleware/VerifyToken.js";
 
 const router = express.Router();
 
@@ -19,15 +19,15 @@ router.post("/register", async (req, res) => {
 });
 
 //crud
-router.get("/all", /* verifyToken, */ async (req, res) => {
+router.get("/all", verifyToken, async (req, res) => {
     getAll(req, res)
 });
 
-router.get("/get/:id", /* verifyToken, */ async (req, res) => {
+router.get("/get/:id", verifyToken, async (req, res) => {
     get(req, res)
 });
 
-router.put("/update/:id", /* verifyToken, */ async (req, res) => {
+router.put("/update/:id", verifyToken, async (req, res) => {
     update(req, res)
 })
 
