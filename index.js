@@ -1,9 +1,6 @@
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-import findPostById from "./src/routes/post/findPostById.js";
-import findAllPost from "./src/routes/psot/findAllPost.js";
-
 import auth from "./src/routes/user/auth.js";
 import crud from "./src/routes/user/crud.js";
 

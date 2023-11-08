@@ -1,5 +1,4 @@
 import Post from "../../models/post.js";
-import db_connection from "../../db_connection.js";
 
 const testPosts = [
   {
