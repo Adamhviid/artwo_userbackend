@@ -1,5 +1,4 @@
 import User from '../../models/user.js';
-import db_connection from '../../db_connection.js';
 
 const testUsers = [
     {

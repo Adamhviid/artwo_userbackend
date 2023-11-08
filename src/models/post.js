@@ -1,5 +1,5 @@
 import { DataTypes } from 'sequelize';
-import connection from "../db_connection.js";
+import connection from "../database/connection.js"
 
 const post = connection.define("posts", {
     id: {
@@ -31,7 +31,7 @@ const post = connection.define("posts", {
 })
 
 post.sync().then(() => {
-    console.log('posts table created successfully!');
+    console.log('posts table created successfully!')
 }).catch((error) => {
     console.error('Unable to create table : ', error);
 });
