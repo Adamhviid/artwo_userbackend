@@ -4,46 +4,37 @@ export default async function update(id, req) {
     try {
         const { username, firstname, lastname, email, password } = req.body;
 
-        const user = await userModel.findOne({
+        await userModel.findOne({
             where: {
                 id: id
             }
-        })
+        }).then(async user => {
+            // Check if the password was changed
+            let hashedPassword = user.password;
+            if (password != user.password) {
+                // Hash the new password
+                const salt = await bcrypt.genSalt();
+                hashedPassword = await bcrypt.hash(password, salt);
+            }
 
-        // Check if the password was changed
-        if (password != user.password) {
-            // Hash the new password
-            const salt = await bcrypt.genSalt();
-            const hashedPassword = await bcrypt.hash(password, salt);
-
-            // Update the user's password
+            // Update the user's information
             await userModel.update({
-                password: hashedPassword
+                username,
+                firstName: firstname,
+                lastName: lastname,
+                email,
+                password: hashedPassword,
+                isAdmin: false
             }, {
                 where: {
                     id: id
                 }
-            })
-        }
+            });
 
-        // Update the user's other information
-        await userModel.update({
-            username: username,
-            firstName: firstname,
-            lastName: lastname,
-            email: email,
-            isAdmin: false
-        }, {
-            where: {
-                id: id
-            }
-        })
-
-        return "Bruger opdateret"
-
+            return 'User updated successfully';
+        });
     } catch (err) {
-        throw err
-
+        throw err;
     }
 }
 
