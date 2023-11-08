@@ -2,7 +2,7 @@ import bcrypt from "bcrypt";
 
 import userModel from '../../../models/user.js';
 
-export default async function Register(req, res) {
+export default async function register(req, res) {
     try {
         const { username, firstName, lastName, email, password } = req.body;
 

@@ -4,56 +4,60 @@ import jwt from "jsonwebtoken";
 import * as dotenv from 'dotenv'
 dotenv.config()
 
-export default async function Login(req, res) {
+export default async function login(req, res) {
     try {
         const { username, email, password } = req.body;
 
         if (!username && !email) {
-            res.status(400).json("Email or username is required");
+            res.status(400).json("Email eller brugernavn er påkrævet");
             return;
         }
 
         if (!password) {
-            res.status(400).json("Password is required");
+            res.status(400).json("Password er påkrævet");
             return;
         }
 
-        let user = {};
+        let user = null;
         if (username) {
-            user = userModel.findOne({
+            user = await userModel.findOne({
                 where: {
                     username: username
                 }
-            })
+            });
         } else {
-            user = userModel.findOne({
+            user = await userModel.findOne({
                 where: {
                     email: email
                 }
-            })
+            });
         }
 
+        if (user != null) {
+            const passwordCompare = await bcrypt.compare(password, user.password);
 
-        if (user) {
-            /* const passwordCompare = await bcrypt.compare(password, user.password);
-            
-            if (passwordCompare) { */
-            const token = jwt.sign(
-                {
-                    id: user.id,
-                },
-                `${process.env.JWT_TOKEN_SECRET}`,
-                {
-                    expiresIn: "24h",
-                }
-            );
+            if (passwordCompare) {
+                const token = jwt.sign(
+                    {
+                        id: user.id,
+                    },
+                    `${process.env.JWT_TOKEN_SECRET}`,
+                    {
+                        expiresIn: "24h",
+                    }
+                );
 
-            user.token = token;
-            res.status(200).json(user);
+                user.dataValues.token = token;
+                res.status(200).json(user);
+
+            } else {
+                res.status(400).json('Forkert password');
+            }
 
         } else {
             res.status(400).json('Bruger findes ikke');
         }
+
     } catch (err) {
         res.status(500).json(err);
     }
