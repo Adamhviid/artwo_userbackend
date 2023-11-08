@@ -1,14 +1,12 @@
 import bcrypt from "bcrypt";
-import * as dotenv from 'dotenv'
-dotenv.config()
 
 import userModel from '../../../models/user.js';
 
 export default async function Register(req) {
     try {
-        const { username, firstname, lastname, email, password } = req.body;
+        const { username, firstName, lastName, email, password } = req.body;
 
-        if (!username || !email || !firstname || !lastname || !password) {
+        if (!username || !email || !firstName || !lastName || !password) {
             res.status(400).json("indtast venligst alle felter");
             return;
         }
@@ -18,8 +16,8 @@ export default async function Register(req) {
 
         await userModel.create({
             username: username,
-            firstName: firstname,
-            lastName: lastname,
+            firstName: firstName,
+            lastName: lastName,
             email: email,
             password: hashedPassword,
             isAdmin: false
