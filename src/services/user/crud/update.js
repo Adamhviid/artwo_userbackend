@@ -2,7 +2,7 @@ import bcrypt from "bcrypt";
 
 import userModel from '../../../models/user.js';
 
-export default async function update(req) {
+export default async function update(req, res) {
     try {
         const { username, firstName, lastName, email, password } = req.body;
         const id = req.params.id;
@@ -31,13 +31,13 @@ export default async function update(req) {
             }
         });
 
-        return 'Bruger opdateret';
+        res.status(200).json('Bruger opdateret');
 
     } catch (err) {
         if (err.name = "SequelizeUniqueConstraintError") {
-            return "Brugernavn eller email er allerede i brug"
+            res.status(400).json("Brugernavn eller email er allerede i brug");
         } else {
-            return err
+            res.status(500).json(err);
         }
     }
 }

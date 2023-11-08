@@ -11,48 +11,24 @@ const router = express.Router();
 
 //auth
 router.post("/login", async (req, res) => {
-    login(req)
-        .then((result) => {
-            res.status(200).json(result);
-        }
-        ).catch((err) => {
-            res.status(500).json(err);
-        })
+    login(req, res)
 });
 
 router.post("/register", async (req, res) => {
-    register(req)
-        .then((result) => {
-            res.status(200).json(result);
-        }
-        ).catch((err) => {
-            res.status(500).json(err);
-        })
+    register(req, res)
 });
 
 //crud
 router.get("/all", /* verifyToken, */ async (req, res) => {
-    getAll().then((result) => {
-        res.status(200).json(result);
-    }).catch((err) => {
-        res.status(500).json(err);
-    })
+    getAll(req, res)
 });
 
 router.get("/get/:id", /* verifyToken, */ async (req, res) => {
-    get(req).then((result) => {
-        res.status(200).json(result);
-    }).catch((err) => {
-        res.status(500).json(err);
-    })
+    get(req, res)
 });
 
 router.put("/update/:id", /* verifyToken, */ async (req, res) => {
-    update(req).then((result) => {
-        res.status(200).json(result);
-    }).catch((err) => {
-        res.status(500).json(err);
-    })
+    update(req, res)
 })
 
 export default router;

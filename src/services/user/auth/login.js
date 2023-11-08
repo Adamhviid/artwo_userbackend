@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 import * as dotenv from 'dotenv'
 dotenv.config()
 
-export default async function Login(req) {
+export default async function Login(req, res) {
     try {
         const { username, email, password } = req.body;
 
@@ -49,15 +49,12 @@ export default async function Login(req) {
             );
 
             user.token = token;
-            return user
+            res.status(200).json(user);
 
-            /*  } else {
-                 return "Invalid Credentials";
-             } */
         } else {
-            return "Invalid Credentials";
+            res.status(400).json('Bruger findes ikke');
         }
     } catch (err) {
-        throw err
+        res.status(500).json(err);
     }
 }
