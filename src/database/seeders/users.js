@@ -1,5 +1,13 @@
 import User from '../../models/user.js';
 
+User
+    .sync()
+    .then(() => {
+        console.log('user table created');
+    }).catch((error) => {
+        console.error('Unable to create table : ', error);
+    });
+
 const testUsers = [
     {
         username: 'johndoe',

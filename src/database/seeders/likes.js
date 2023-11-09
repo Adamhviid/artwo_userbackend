@@ -1,5 +1,14 @@
 import Like from '../../models/like.js';
 
+Like
+    .sync()
+    .then(() => {
+        console.log("like table created");
+    })
+    .catch((error) => {
+        console.error("Unable to create table : ", error);
+    });
+
 const testLikes = [
     {
         userId: 1,

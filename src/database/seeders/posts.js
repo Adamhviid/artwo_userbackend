@@ -1,5 +1,14 @@
 import Post from "../../models/post.js";
 
+Post
+  .sync()
+  .then(() => {
+    console.log("posts table created");
+  })
+  .catch((error) => {
+    console.error("Unable to create table : ", error);
+  });
+
 const testPosts = [
   {
     title: "My first post",

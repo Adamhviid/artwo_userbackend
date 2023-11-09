@@ -4,7 +4,7 @@ export default async function like(req, res) {
     try {
         const { userId, postId } = req.body;
 
-        const like = await likeModel.create({
+        await likeModel.create({
             userId,
             postId,
         });

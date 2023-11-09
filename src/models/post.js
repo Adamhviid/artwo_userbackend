@@ -1,6 +1,8 @@
 import { DataTypes } from "sequelize";
 import connection from "../database/connection.js";
 
+import User from './user.js';
+
 const post = connection.define("posts", {
     id: {
         type: DataTypes.INTEGER,
@@ -23,20 +25,15 @@ const post = connection.define("posts", {
     userId: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        references: {
+            model: User,
+            key: 'id',
+        },
     },
     deletedAt: {
         type: DataTypes.DATE,
         allowNull: true,
     },
 });
-
-post
-    .sync()
-    .then(() => {
-        console.log("posts table created");
-    })
-    .catch((error) => {
-        console.error("Unable to create table : ", error);
-    });
 
 export default post;
