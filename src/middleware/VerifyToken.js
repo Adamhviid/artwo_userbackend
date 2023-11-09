@@ -1,11 +1,11 @@
 import jwt from 'jsonwebtoken';
 
-export default async function VerifyToken(req, res, next) {
+export default async function verifyToken(req, res, next) {
     try {
-        const verify = jwt.verify(req.headers.token, process.env.JWT_TOKEN_SECRET);
+        const verification = jwt.verify(req.headers.token, process.env.JWT_TOKEN_SECRET);
 
-        if (verify) {
-            req.user = verify;
+        if (verification) {
+            req.user = verification;
             return next();
         }
 
