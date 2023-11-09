@@ -19,11 +19,11 @@ router.post("/register", async (req, res) => {
 });
 
 //crud
-router.get("/all", verifyToken, async (req, res) => {
+router.get("/all", async (req, res) => {
     getAll(req, res)
 });
 
-router.get("/get/:id", verifyToken, async (req, res) => {
+router.get("/get/:id", async (req, res) => {
     get(req, res)
 });
 
