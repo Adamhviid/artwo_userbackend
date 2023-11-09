@@ -5,8 +5,9 @@ import getAll from "../services/post/crud/getAll.js";
 import get from "../services/post/crud/get.js";
 import update from "../services/post/crud/update.js";
 import create from "../services/post/crud/create.js";
-import like from "../services/post/like.js";
-import unlike from "../services/post/unlike.js";
+import like from "../services/post/likes/like.js";
+import unlike from "../services/post/likes/unlike.js";
+import comment from "../services/post/commenting/comment.js";
 
 import verifyToken from '../middleware/verifyToken.js'
 
@@ -39,5 +40,9 @@ router.post("/like/:id", verifyToken, async (req, res) => {
 router.post("/unlike/:id", verifyToken, async (req, res) => {
     unlike(req, res)
 });
+
+router.post("/comment/:id", verifyToken, async (req, res) => {
+    comment(req, res)
+})
 
 export default router;

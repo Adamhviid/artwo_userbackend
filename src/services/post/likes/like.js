@@ -1,4 +1,4 @@
-import likeModel from "../../models/like.js";
+import likeModel from "../../../models/like.js";
 
 export default async function like(req, res) {
     try {
