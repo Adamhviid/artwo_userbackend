@@ -6,7 +6,8 @@ const testUsers = [
         firstName: 'John',
         lastName: 'Doe',
         email: 'johndoe@example.com',
-        password: 'password123',
+        dateOfBirth: '1990-01-01',
+        password: '$2b$10$ipw.8tiGNKCdWdAV0DtWI.LKKQqKOQ0rIIxI15OLONzufyb7bP2lC', //123
         isAdmin: '0'
     },
     {
@@ -14,7 +15,8 @@ const testUsers = [
         firstName: 'Jane',
         lastName: 'Doe',
         email: 'janedoe@example.com',
-        password: 'password456',
+        dateOfBirth: '1990-01-01',
+        password: '$2b$10$ipw.8tiGNKCdWdAV0DtWI.LKKQqKOQ0rIIxI15OLONzufyb7bP2lC', //123
         isAdmin: '1'
     }
 ];

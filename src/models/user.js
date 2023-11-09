@@ -28,6 +28,10 @@ const user = connection.define('users', {
             isEmail: true,
         },
     },
+    dateOfBirth: {
+        type: DataTypes.DATEONLY,
+        allowNull: false,
+    },
     password: {
         type: DataTypes.STRING,
         allowNull: false,

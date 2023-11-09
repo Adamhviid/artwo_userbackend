@@ -4,9 +4,9 @@ import userModel from '../../../models/user.js';
 
 export default async function register(req, res) {
     try {
-        const { username, firstName, lastName, email, password } = req.body;
+        const { username, firstName, lastName, email, dateOfBirth, password } = req.body;
 
-        if (!username || !email || !firstName || !lastName || !password) {
+        if (!username || !email || !firstName || !lastName || !dateOfBirth || !password) {
             res.status(400).json("indtast venligst alle felter");
             return;
         }
@@ -19,6 +19,7 @@ export default async function register(req, res) {
             firstName: firstName,
             lastName: lastName,
             email: email,
+            dateOfBirth: dateOfBirth,
             password: hashedPassword,
             isAdmin: false
         })

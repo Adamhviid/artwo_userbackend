@@ -1,11 +1,11 @@
 import express from "express";
 
+import verifyToken from "../middleware/VerifyToken.js";
 import getAll from '../services/user/crud/getAll.js'
 import get from '../services/user/crud/get.js'
 import update from '../services/user/crud/update.js'
 import login from "../services/user/auth/login.js";
 import register from "../services/user/auth/register.js";
-import verifyToken from "../middleware/VerifyToken.js";
 
 const router = express.Router();
 
