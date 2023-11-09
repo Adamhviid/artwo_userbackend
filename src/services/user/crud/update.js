@@ -1,40 +1,44 @@
+import bcrypt from "bcrypt";
+
 import userModel from '../../../models/user.js';
 
-export default async function update(id, req) {
+export default async function update(req, res) {
     try {
-        const { username, firstname, lastname, email, password } = req.body;
+        const { username, firstName, lastName, email, password } = req.body;
+        const id = req.params.id;
 
-        await userModel.findOne({
+        const user = await userModel.findOne({
             where: {
                 id: id
             }
-        }).then(async user => {
-            // Check if the password was changed
-            let hashedPassword = user.password;
-            if (password != user.password) {
-                // Hash the new password
-                const salt = await bcrypt.genSalt();
-                hashedPassword = await bcrypt.hash(password, salt);
+        })
+
+        let hashedPassword = user.password;
+        if (password != user.password) {
+            const salt = await bcrypt.genSalt();
+            hashedPassword = await bcrypt.hash(password, salt);
+        }
+
+        await user.update({
+            username: username,
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            password: hashedPassword,
+        }, {
+            where: {
+                id: id
             }
-
-            // Update the user's information
-            await userModel.update({
-                username,
-                firstName: firstname,
-                lastName: lastname,
-                email,
-                password: hashedPassword,
-                isAdmin: false
-            }, {
-                where: {
-                    id: id
-                }
-            });
-
-            return 'User updated successfully';
         });
+
+        res.status(200).json('Bruger opdateret');
+
     } catch (err) {
-        throw err;
+        if (err.name = "SequelizeUniqueConstraintError") {
+            res.status(400).json("Brugernavn eller email er allerede i brug");
+        } else {
+            res.status(500).json(err);
+        }
     }
 }
 

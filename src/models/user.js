@@ -41,7 +41,7 @@ const user = connection.define('users', {
 
 
 user.sync().then(() => {
-    console.log('posts table created successfully!');
+    console.log('user table created successfully!');
 }).catch((error) => {
     console.error('Unable to create table : ', error);
 });

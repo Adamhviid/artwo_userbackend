@@ -1,14 +1,12 @@
 import bcrypt from "bcrypt";
-import * as dotenv from 'dotenv'
-dotenv.config()
 
 import userModel from '../../../models/user.js';
 
-export default async function Register(req) {
+export default async function register(req, res) {
     try {
-        const { username, firstname, lastname, email, password } = req.body;
+        const { username, firstName, lastName, email, password } = req.body;
 
-        if (!username || !email || !firstname || !lastname || !password) {
+        if (!username || !email || !firstName || !lastName || !password) {
             res.status(400).json("indtast venligst alle felter");
             return;
         }
@@ -18,20 +16,20 @@ export default async function Register(req) {
 
         await userModel.create({
             username: username,
-            firstName: firstname,
-            lastName: lastname,
+            firstName: firstName,
+            lastName: lastName,
             email: email,
             password: hashedPassword,
             isAdmin: false
         })
 
-        return "Bruger oprettet"
+        res.status(200).json('Bruger oprettet');
 
     } catch (err) {
         if (err.name = "SequelizeUniqueConstraintError") {
-            return "Brugernavn eller email er allerede i brug"
+            res.status(400).json("Brugernavn eller email er allerede i brug");
         } else {
-            return err
+            res.status(500).json(err);
         }
     }
 }

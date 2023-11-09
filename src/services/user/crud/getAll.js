@@ -1,10 +1,12 @@
 import userModel from '../../../models/user.js';
 
-export default async function getAll() {
+export default async function getAll(req, res) {
     try {
-        return await userModel.findAll();
+        const users = await userModel.findAll();
+
+        res.status(200).json(users);
 
     } catch (err) {
-        throw err
+        res.status(500).json(err);
     }
 }
