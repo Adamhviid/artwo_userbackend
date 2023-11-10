@@ -4,9 +4,17 @@ import commentModel from "../../../models/comment.js"
 
 export default async function getAll(req, res) {
     try {
-        const posts = await postModel.findAll();
+        const posts = await postModel.findAll({
+            order: [
+                ['updatedAt', 'DESC']
+            ]
+        });
         const likes = await likeModel.findAll();
-        const comments = await commentModel.findAll();
+        const comments = await commentModel.findAll({
+            order: [
+                ['updatedAt', 'DESC']
+            ]
+        });
 
         res.status(200).json({ posts, likes, comments })
 
