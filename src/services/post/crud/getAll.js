@@ -14,7 +14,6 @@ export default async function getAll(req, res) {
             offset: parseInt(offset),
         });
 
-        // Fetch likes and comments without pagination for simplicity
         const likes = await likeModel.findAll();
         const comments = await commentModel.findAll({
             order: [['updatedAt', 'DESC']],
