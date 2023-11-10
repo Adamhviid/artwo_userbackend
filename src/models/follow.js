@@ -9,7 +9,7 @@ const follow = connection.define('followers', {
         primaryKey: true,
         autoIncrement: true,
     },
-    followerId: {
+    userId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
@@ -17,7 +17,7 @@ const follow = connection.define('followers', {
             key: 'id',
         },
     },
-    followingId: {
+    followId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {

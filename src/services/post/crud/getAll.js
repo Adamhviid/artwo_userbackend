@@ -1,6 +1,7 @@
 import postModel from "../../../models/post.js";
 import likeModel from "../../../models/like.js";
 import commentModel from "../../../models/comment.js";
+import followModel from "../../../models/follow.js";
 
 export default async function getAll(req, res) {
     try {
@@ -14,12 +15,14 @@ export default async function getAll(req, res) {
             offset: parseInt(offset),
         });
 
-        const likes = await likeModel.findAll();
         const comments = await commentModel.findAll({
             order: [['updatedAt', 'DESC']],
         });
+        const likes = await likeModel.findAll();
+        const followers = await followModel.findAll();
 
-        res.status(200).json({ posts, postPages, likes, comments });
+
+        res.status(200).json({ posts, postPages, likes, comments, followers });
 
     } catch (err) {
         res.status(500).json(err);

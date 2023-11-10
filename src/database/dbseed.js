@@ -2,6 +2,7 @@ import Post from "../models/post.js";
 import Comment from '../models/comment.js';
 import Like from '../models/like.js';
 import User from '../models/user.js';
+import Follow from '../models/follow.js';
 
 const testUsers = [
     {
@@ -77,6 +78,8 @@ async function dbSeed() {
         await Comment.sync();
 
         await Like.sync();
+
+        await Follow.sync();
 
     } catch (err) {
         console.error(err);

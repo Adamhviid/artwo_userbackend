@@ -2,11 +2,11 @@ import userModel from '../../../models/user.js';
 
 export default async function get(req, res) {
     try {
-        const id = req.params.id;
+        const username = req.params.username;
 
         const user = await userModel.findOne({
             where: {
-                id: id
+                username: username
             }
         })
 

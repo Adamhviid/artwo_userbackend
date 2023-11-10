@@ -48,7 +48,7 @@ export default async function login(req, res) {
                 );
 
                 user.dataValues.token = token;
-                res.status(200).json(user);
+                res.status(200).json(user.dataValues);
 
             } else {
                 res.status(400).json('Forkert password');
