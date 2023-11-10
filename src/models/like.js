@@ -2,7 +2,6 @@ import { DataTypes } from "sequelize";
 import connection from "../database/connection.js";
 
 import Post from './post.js';
-import User from './user.js';
 
 const like = connection.define("like", {
     id: {
@@ -15,8 +14,8 @@ const like = connection.define("like", {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: User,
-            key: 'id',
+            model: Post,
+            key: 'userId',
         },
     },
     postId: {
