@@ -1,13 +1,5 @@
 import User from '../../models/user.js';
 
-User
-    .sync()
-    .then(() => {
-        console.log('user table created');
-    }).catch((error) => {
-        console.error('Unable to create table : ', error);
-    });
-
 const testUsers = [
     {
         username: 'johndoe',
@@ -31,13 +23,19 @@ const testUsers = [
 
 const seedUsers = async () => {
     try {
-        console.log('Seeding users...');
-        for (const user of testUsers) {
-            await User.create(user);
-        }
+        User
+            .sync()
+            .then(async () => {
+                console.log('Seeding users...');
+                for (const user of testUsers) {
+                    await User.create(user);
+                }
+            }).catch((error) => {
+                console.error('Unable to create table : ', error);
+            });
     } catch (err) {
         console.error(err);
     }
 };
 
-seedUsers();
+export default seedUsers();

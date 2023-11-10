@@ -1,6 +1,6 @@
 import Comment from '../../models/comment.js';
 
-Comment
+export default Comment
     .sync()
     .then(() => {
         console.log("Comment table created");
