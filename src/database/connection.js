@@ -3,13 +3,28 @@ import * as dotenv from "dotenv";
 dotenv.config();
 
 const connection = new Sequelize(
-  `${process.env.DATABASE_NAME}`,
-  `${process.env.DATABASE_USERNAME}`,
-  `${process.env.DATABASE_PASSWORD}`,
-  {
-    host: "localhost",
-    dialect: "mysql",
-  }
+    process.env.AZURE_DATABASE_DATABASE,
+    process.env.AZURE_DATABASE_USERNAME,
+    process.env.AZURE_DATABASE_PASSWORD,
+    {
+        host: process.env.AZURE_DATABASE_SERVER,
+        port: parseInt(process.env.AZURE_DATABASE_PORT),
+        dialect: "mssql",
+        dialectOptions: {
+            options: {
+                encrypt: true,
+            },
+        },
+    }
 );
+
+connection
+    .authenticate()
+    .then(() => {
+        console.log("Connection has been established successfully.");
+    })
+    .catch((err) => {
+        console.error("Unable to connect to the database:", err);
+    });
 
 export default connection;

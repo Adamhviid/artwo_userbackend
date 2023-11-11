@@ -7,9 +7,7 @@ import post from "./src/routes/post.js";
 
 const app = express();
 
-app.use(cors({
-    origin: 'http://localhost:5173' // Only allow requests from this origin
-}));
+app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 
