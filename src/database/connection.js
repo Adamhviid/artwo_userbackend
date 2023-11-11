@@ -1,4 +1,5 @@
 import { Sequelize } from "sequelize";
+import sql from "mssql";
 import * as dotenv from "dotenv";
 dotenv.config();
 
@@ -7,9 +8,9 @@ const connection = new Sequelize(
     process.env.AZURE_DATABASE_USERNAME,
     process.env.AZURE_DATABASE_PASSWORD,
     {
+        dialect: "mssql",
         host: process.env.AZURE_DATABASE_SERVER,
         port: parseInt(process.env.AZURE_DATABASE_PORT),
-        dialect: "mssql",
         dialectOptions: {
             options: {
                 encrypt: true,
