@@ -3,13 +3,13 @@ import * as dotenv from "dotenv";
 dotenv.config();
 
 const connection = new Sequelize(
-  `${process.env.DATABASE_NAME}`,
-  `${process.env.DATABASE_USERNAME}`,
-  `${process.env.DATABASE_PASSWORD}`,
-  {
-    host: "localhost",
-    dialect: "mysql",
-  }
+    `${process.env.LOCAL_DATABASE_NAME}`,
+    `${process.env.LOCAL_DATABASE_USERNAME}`,
+    `${process.env.LOCAL_DATABASE_PASSWORD}`,
+    {
+        host: "localhost",
+        dialect: "mysql",
+    }
 );
 
 export default connection;
