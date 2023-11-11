@@ -8,6 +8,7 @@ import create from "../services/post/crud/create.js";
 import like from "../services/post/likes/like.js";
 import unlike from "../services/post/likes/unlike.js";
 import comment from "../services/post/commenting/comment.js";
+import uncomment from "../services/post/commenting/uncomment.js";
 
 import verifyToken from '../middleware/verifyToken.js'
 
@@ -43,6 +44,10 @@ router.post("/unlike/:id", verifyToken, async (req, res) => {
 
 router.post("/comment/:id", verifyToken, async (req, res) => {
     comment(req, res)
+})
+
+router.post("/uncomment/:id", verifyToken, async (req, res) => {
+    uncomment(req, res)
 })
 
 export default router;

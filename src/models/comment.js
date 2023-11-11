@@ -31,6 +31,10 @@ const comment = connection.define("comment", {
         type: DataTypes.STRING,
         allowNull: false,
     },
+    deletedAt: {
+        type: DataTypes.DATE,
+        allowNull: true,
+    },
 });
 
 export default comment;
