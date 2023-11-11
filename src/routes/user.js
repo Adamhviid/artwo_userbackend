@@ -2,6 +2,7 @@ import express from "express";
 
 import getAll from '../services/user/crud/getAll.js'
 import get from '../services/user/crud/get.js'
+import verify from "../services/user/auth/verify.js"
 import update from '../services/user/crud/update.js'
 import login from "../services/user/auth/login.js";
 import register from "../services/user/auth/register.js";
@@ -28,6 +29,10 @@ router.get("/all", async (req, res) => {
 router.get("/get/:username", async (req, res) => {
     get(req, res)
 });
+
+router.get("/verify", verifyToken, async (req, res) => {
+    verify(req, res)
+})
 
 router.put("/update/:id", verifyToken, async (req, res) => {
     update(req, res)
