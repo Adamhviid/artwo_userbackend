@@ -16,6 +16,10 @@ app.use(cookieParser());
 app.use("/user", user);
 app.use("/post", post);
 
+app.get("/bruh", (req, res) => {
+    res.send("Hello World!");
+});
+
 app.listen(process.env.PORT || 8080, () => {
     console.log(`Server listening on port ${process.env.PORT || 8080}...`);
 });
