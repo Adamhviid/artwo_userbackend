@@ -1,4 +1,5 @@
 import express from "express";
+import verifyToken from "../middleware/verifyToken.js";
 
 import deleteById from "../services/post/crud/deleteById.js";
 import getAll from "../services/post/crud/getAll.js";
@@ -10,44 +11,42 @@ import unlike from "../services/post/likes/unlike.js";
 import comment from "../services/post/commenting/comment.js";
 import uncomment from "../services/post/commenting/uncomment.js";
 
-import verifyToken from '../middleware/verifyToken.js'
-
 const router = express.Router();
 
 router.get("/all", async (req, res) => {
-    getAll(req, res)
+    getAll(req, res);
 });
 
 router.get("/get/:id", async (req, res) => {
-    get(req, res)
+    get(req, res);
 });
 
 router.delete("/delete/:id", verifyToken, async (req, res) => {
-    deleteById(req, res)
+    deleteById(req, res);
 });
 
 router.put("/update/:id", verifyToken, async (req, res) => {
-    update(req, res)
+    update(req, res);
 });
 
 router.post("/create", verifyToken, async (req, res) => {
-    create(req, res)
+    create(req, res);
 });
 
 router.post("/like/:id", verifyToken, async (req, res) => {
-    like(req, res)
+    like(req, res);
 });
 
 router.post("/unlike/:id", verifyToken, async (req, res) => {
-    unlike(req, res)
+    unlike(req, res);
 });
 
 router.post("/comment/:id", verifyToken, async (req, res) => {
-    comment(req, res)
-})
+    comment(req, res);
+});
 
 router.post("/uncomment/:id", verifyToken, async (req, res) => {
-    uncomment(req, res)
-})
+    uncomment(req, res);
+});
 
 export default router;
