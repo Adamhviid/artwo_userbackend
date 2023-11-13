@@ -28,4 +28,15 @@ connection
         console.error("Unable to connect to the database:", err);
     });
 
+//local db
+/* const connection = new Sequelize(
+    `${process.env.LOCAL_DATABASE_NAME}`,
+    `${process.env.LOCAL_DATABASE_USERNAME}`,
+    `${process.env.LOCAL_DATABASE_PASSWORD}`,
+    {
+        host: "localhost",
+        dialect: "mysql",
+    }
+); */
+
 export default connection;
