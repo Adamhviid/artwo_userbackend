@@ -41,6 +41,21 @@ const user = connection.define('users', {
         defaultValue: '0',
         allowNull: false,
     },
+}, {
+    indexes: [
+        {
+            fields: ['username']
+        },
+        {
+            fields: ['firstName']
+        },
+        {
+            fields: ['lastName']
+        },
+        {
+            fields: ['email']
+        }
+    ]
 });
 
 export default user;

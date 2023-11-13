@@ -34,6 +34,12 @@ const post = connection.define("posts", {
         type: DataTypes.DATE,
         allowNull: true,
     },
+}, {
+    indexes: [
+        {
+            fields: ['title']
+        }
+    ]
 });
 
 export default post;

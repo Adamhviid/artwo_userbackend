@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser";
 
 import user from "./src/routes/user.js";
 import post from "./src/routes/post.js";
+import search from "./src/routes/search.js";
 
 const app = express();
 
@@ -13,6 +14,7 @@ app.use(cookieParser());
 
 app.use("/user", user);
 app.use("/post", post);
+app.use("/search", search);
 
 app.get("/bruh", (req, res) => {
     res.send("Hello World!");

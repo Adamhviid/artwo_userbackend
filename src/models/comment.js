@@ -35,6 +35,12 @@ const comment = connection.define("comment", {
         type: DataTypes.DATE,
         allowNull: true,
     },
+}, {
+    indexes: [
+        {
+            fields: ['content']
+        }
+    ]
 });
 
 export default comment;
