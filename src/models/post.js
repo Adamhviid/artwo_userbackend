@@ -18,10 +18,6 @@ const post = connection.define("posts", {
         type: DataTypes.TEXT,
         allowNull: true,
     },
-    tags: {
-        type: DataTypes.STRING,
-        allowNull: true,
-    },
     userId: {
         type: DataTypes.INTEGER,
         allowNull: false,
