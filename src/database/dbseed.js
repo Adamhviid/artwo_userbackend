@@ -79,12 +79,12 @@ const testTags = [
 async function dbSeed() {
     console.log("Seeding database...");
     try {
-        Post.belongsToMany(Tag);
+        Post.belongsToMany(Tag, { through: 'post_tags' });
         Post.hasMany(Like);
         Post.hasMany(Comment);
         Post.belongsTo(User);
 
-        Tag.belongsToMany(Post);
+        Tag.belongsToMany(Post, { through: 'post_tags' });
 
         Like.belongsTo(Post);
         Like.belongsTo(User);
