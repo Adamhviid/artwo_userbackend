@@ -3,7 +3,7 @@ import sql from "mssql";
 import * as dotenv from "dotenv";
 dotenv.config();
 
-/* const connection = new Sequelize(
+const connection = new Sequelize(
     process.env.AZURE_DATABASE_DATABASE,
     process.env.AZURE_DATABASE_USERNAME,
     process.env.AZURE_DATABASE_PASSWORD,
@@ -26,10 +26,10 @@ connection
     })
     .catch((err) => {
         console.error("Unable to connect to the database:", err);
-    }); */
+    });
 
 //local db
-const connection = new Sequelize(
+/* const connection = new Sequelize(
     `${process.env.LOCAL_DATABASE_NAME}`,
     `${process.env.LOCAL_DATABASE_USERNAME}`,
     `${process.env.LOCAL_DATABASE_PASSWORD}`,
@@ -37,6 +37,6 @@ const connection = new Sequelize(
         host: "localhost",
         dialect: "mysql",
     }
-);
+); */
 
 export default connection;
