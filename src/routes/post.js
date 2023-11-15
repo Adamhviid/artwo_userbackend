@@ -9,6 +9,7 @@ import like from "../services/post/likes/like.js";
 import unlike from "../services/post/likes/unlike.js";
 import comment from "../services/post/commenting/comment.js";
 import uncomment from "../services/post/commenting/uncomment.js";
+import getAllTags from "../services/post/tags/getAllTags.js";
 
 import verifyToken from '../middleware/verifyToken.js'
 
@@ -48,6 +49,10 @@ router.post("/comment/:id", verifyToken, async (req, res) => {
 
 router.post("/uncomment/:id", verifyToken, async (req, res) => {
     uncomment(req, res)
+})
+
+router.get("/tags/all", async (req, res) => {
+    getAllTags(req, res)
 })
 
 export default router;
