@@ -1,18 +1,19 @@
 import postModel from "../../../models/post.js";
+import likeModel from "../../../models/like.js";
+import commentModel from "../../../models/comment.js";
+import followModel from "../../../models/follow.js";
+import userModel from "../../../models/user.js";
 
 export default async function get(req, res) {
     try {
-        const id = req.params.id;
-
         const post = await postModel.findOne({
             where: {
-                id: id,
+                id: req.params.id,
             },
+            include: [userModel, commentModel, likeModel],
         });
 
-        if (post) {
-            res.status(200).json(post);
-        }
+        res.status(200).json(post);
 
     } catch (err) {
         res.status(500).json(err);

@@ -1,9 +1,9 @@
-import Post from "../models/post.js";
-import Comment from '../models/comment.js';
-import Like from '../models/like.js';
-import User from '../models/user.js';
-import Follow from '../models/follow.js';
-import Tag from '../models/tag.js';
+import post from "../models/post.js";
+import comment from '../models/comment.js';
+import like from '../models/like.js';
+import user from '../models/user.js';
+import follow from '../models/follow.js';
+import tag from '../models/tag.js';
 
 import Connection from './connection.js';
 
@@ -79,40 +79,41 @@ const testTags = [
 async function dbSeed() {
     console.log("Seeding database...");
     try {
-        Post.belongsToMany(Tag);
-        Post.hasMany(Like);
-        Post.hasMany(Comment);
-        Post.belongsTo(User);
+        user.hasMany(like, { onDelete: 'cascade' });
+        user.hasMany(comment, { onDelete: 'cascade' });
+        user.hasMany(follow, { as: 'follower' });
+        user.hasMany(follow, { as: 'following' });
+        user.hasMany(post, { onDelete: 'cascade' });
 
-        Tag.belongsToMany(Post);
+        post.belongsToMany(tag, { through: 'post_tags' });
+        post.belongsTo(user, { foreignKey: 'userId' });
+        post.hasMany(comment, { foreignKey: 'postId' });
+        post.hasMany(like, { foreignKey: 'postId' });
 
-        Like.belongsTo(Post);
-        Like.belongsTo(User);
+        tag.belongsToMany(post, { through: 'post_tags' });
 
-        User.hasMany(Like);
-        User.hasMany(Comment);
-        User.hasMany(Follow, { as: 'follower' });
-        User.hasMany(Follow, { as: 'following' });
-        User.hasMany(Post);
+        like.belongsTo(post, { foreignKey: 'postId' });
+        like.belongsTo(user, { foreignKey: 'userId' });
 
-        Follow.belongsTo(User, { as: 'follower' });
-        Follow.belongsTo(User, { as: 'following' });
+        follow.belongsTo(user, { as: 'follower' });
+        follow.belongsTo(user, { as: 'following' });
 
-        Comment.belongsTo(Post);
-        Comment.belongsTo(User);
+        comment.belongsTo(post, { foreignKey: 'postId' });
+        comment.belongsTo(user, { foreignKey: 'userId' });
+
 
         await Connection.sync();
 
-        for (const user of testUsers) {
-            await User.create(user);
+        for (const testUser of testUsers) {
+            await user.create(testUser);
         }
 
-        for (const post of testPosts) {
-            await Post.create(post);
+        for (const testPost of testPosts) {
+            await post.create(testPost);
         }
 
-        for (const tag of testTags) {
-            await Tag.create(tag);
+        for (const testTag of testTags) {
+            await tag.create(testTag);
         }
 
     } catch (err) {

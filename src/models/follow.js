@@ -1,7 +1,7 @@
 import { DataTypes } from 'sequelize';
 import connection from "../database/connection.js"
 
-import User from './user.js';
+import user from './user.js';
 
 const follow = connection.define('followers', {
     id: {
@@ -13,7 +13,7 @@ const follow = connection.define('followers', {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: User,
+            model: user,
             key: 'id',
         },
     },
@@ -21,7 +21,7 @@ const follow = connection.define('followers', {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: User,
+            model: user,
             key: 'id',
         },
     },
