@@ -2,11 +2,11 @@ import commentModel from "../../../models/comment.js";
 
 export default async function uncomment(req, res) {
     try {
-        const { userId, postId } = req.body;
+        const { commentId } = req.body;
 
         await commentModel.update(
             { deletedAt: new Date() },
-            { where: { userId, postId } }
+            { where: { id: commentId } }
         );
 
         res.status(200).json('Comment deleted');
