@@ -11,7 +11,7 @@ export default async function create(req, res) {
             content,
             userId,
         })
-
+        console.log(newPost.id)
         const tagInstances = await Promise.all(tags.map(async (tag) => {
             const [tagInstance] = await tagModel.findOrCreate({
                 where: { tag }
@@ -19,16 +19,19 @@ export default async function create(req, res) {
             return tagInstance;
         }));
 
-        const tag_posts = tagInstances.map(tagInstance => ({
-            postId: newPost.id,
-            tagId: tagInstance.id,
-        }));
 
-        await post_tagModel.bulkCreate(tag_posts);
+        const tag_posts = tagInstances.map(tagInstance => {
+            return post_tagModel.create({
+                postId: newPost.id,
+                tagId: tagInstance.id,
+            });
+        });
+
+        await Promise.all(tag_posts);
 
         res.status(200).json("Post, tags and jointable created");
+
     } catch (err) {
-        console.error(err);
         res.status(500).json(err.message);
     }
 }

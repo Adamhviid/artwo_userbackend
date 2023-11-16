@@ -4,6 +4,7 @@ import like from '../models/like.js';
 import user from '../models/user.js';
 import follow from '../models/follow.js';
 import tag from '../models/tag.js';
+import post_tag from '../models/post_tag.js';
 
 import Connection from './connection.js';
 
@@ -85,12 +86,12 @@ async function dbSeed() {
         user.hasMany(follow, { as: 'following' });
         user.hasMany(post, { onDelete: 'cascade' });
 
-        post.belongsToMany(tag, { through: 'post_tags' });
+        post.belongsToMany(tag, { through: post_tag, foreignKey: 'postId' });
         post.belongsTo(user, { foreignKey: 'userId' });
         post.hasMany(comment, { foreignKey: 'postId' });
         post.hasMany(like, { foreignKey: 'postId' });
-        
-        tag.belongsToMany(post, { through: 'post_tags' });
+
+        tag.belongsToMany(post, { through: post_tag, foreignKey: 'tagId' });
 
         like.belongsTo(post, { foreignKey: 'postId' });
         like.belongsTo(user, { foreignKey: 'userId' });
