@@ -31,7 +31,7 @@ router.put("/update/:id", verifyToken, async (req, res) => {
     update(req, res)
 });
 
-router.post("/create", /* verifyToken, */ async (req, res) => {
+router.post("/create", verifyToken, async (req, res) => {
     create(req, res)
 });
 

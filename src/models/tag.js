@@ -21,4 +21,8 @@ const tag = connection.define("tags", {
     ]
 });
 
+tag.associate = function (models) {
+    tag.belongsToMany(models.post, { through: models.post_tag });
+};
+
 export default tag;

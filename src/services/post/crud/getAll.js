@@ -3,6 +3,8 @@ import likeModel from "../../../models/like.js";
 import commentModel from "../../../models/comment.js";
 import followModel from "../../../models/follow.js";
 import userModel from "../../../models/user.js";
+import tagModel from "../../../models/tag.js";
+import post_tagModel from "../../../models/post_tag.js";
 
 export default async function getAll(req, res) {
     try {
@@ -11,20 +13,39 @@ export default async function getAll(req, res) {
         const postPages = await postModel.count();
 
         const posts = await postModel.findAll({
-            include: [userModel],
+            include: [
+                userModel,
+                {
+                    model: likeModel,
+                    required: false,
+                },
+                {
+                    model: commentModel,
+                    required: false,
+                    include: [
+                        {
+                            model: userModel,
+                            required: false,
+                        },
+                    ],
+                    order: [['updatedAt', 'DESC']],
+                },
+                {
+                    model: tagModel,
+                    through: {
+                        model: post_tagModel,
+                        attributes: [],
+                    },
+                },
+            ],
             order: [['updatedAt', 'DESC']],
             limit: parseInt(pageSize),
             offset: parseInt(offset),
         });
 
-        const comments = await commentModel.findAll({
-            include: [userModel],
-            order: [['updatedAt', 'DESC']],
-        });
-        const likes = await likeModel.findAll();
         const followers = await followModel.findAll();
 
-        res.status(200).json({ posts, postPages, likes, comments, followers });
+        res.status(200).json({ posts, postPages, followers });
 
     } catch (err) {
         res.status(500).json(err);
