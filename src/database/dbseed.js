@@ -89,7 +89,7 @@ async function dbSeed() {
         post.belongsTo(user, { foreignKey: 'userId' });
         post.hasMany(comment, { foreignKey: 'postId' });
         post.hasMany(like, { foreignKey: 'postId' });
-
+        
         tag.belongsToMany(post, { through: 'post_tags' });
 
         like.belongsTo(post, { foreignKey: 'postId' });
@@ -97,6 +97,8 @@ async function dbSeed() {
 
         follow.belongsTo(user, { as: 'follower' });
         follow.belongsTo(user, { as: 'following' });
+        follow.belongsTo(user, { foreignKey: 'userId' });
+        follow.belongsTo(user, { foreignKey: 'followId', as: 'followedUser' });
 
         comment.belongsTo(post, { foreignKey: 'postId' });
         comment.belongsTo(user, { foreignKey: 'userId' });

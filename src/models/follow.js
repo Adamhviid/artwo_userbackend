@@ -12,20 +12,11 @@ const follow = connection.define('followers', {
     userId: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        references: {
-            model: user,
-            key: 'id',
-        },
     },
     followId: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        references: {
-            model: user,
-            key: 'id',
-        },
     },
-
 });
 
 export default follow;

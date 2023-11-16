@@ -10,10 +10,15 @@ export default async function get(req, res) {
             where: {
                 id: req.params.id,
             },
-            include: [userModel, commentModel, likeModel],
+            include: [userModel, likeModel, {
+                model: commentModel,
+                include: [userModel]
+            }],
         });
 
-        res.status(200).json(post);
+        const followers = await followModel.findAll();
+
+        res.status(200).json({ post, followers });
 
     } catch (err) {
         res.status(500).json(err);

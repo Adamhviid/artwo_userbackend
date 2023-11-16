@@ -22,10 +22,6 @@ const comment = connection.define("comment", {
     postId: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        references: {
-            model: post,
-            key: 'id',
-        },
     },
     content: {
         type: DataTypes.STRING,
