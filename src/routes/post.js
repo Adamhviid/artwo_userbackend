@@ -2,7 +2,8 @@ import express from "express";
 
 import deleteById from "../services/post/crud/deleteById.js";
 import getAll from "../services/post/crud/getAll.js";
-import get from "../services/post/crud/get.js";
+import getById from "../services/post/crud/getById.js";
+import getByTag from "../services/post/crud/getByTag.js";
 import update from "../services/post/crud/update.js";
 import create from "../services/post/crud/create.js";
 import like from "../services/post/likes/like.js";
@@ -19,9 +20,18 @@ router.get("/all", async (req, res) => {
     getAll(req, res)
 });
 
-router.get("/get/:id", async (req, res) => {
-    get(req, res)
+router.get("/all/tags", async (req, res) => {
+    getAllTags(req, res)
+})
+
+router.get("/get/id/:id", async (req, res) => {
+    getById(req, res)
 });
+
+router.get("/get/tag/:tag", async (req, res) => {
+    getByTag(req, res)
+});
+
 
 router.delete("/delete/:id", verifyToken, async (req, res) => {
     deleteById(req, res)
@@ -51,8 +61,6 @@ router.post("/uncomment/:id", verifyToken, async (req, res) => {
     uncomment(req, res)
 })
 
-router.get("/tags/all", async (req, res) => {
-    getAllTags(req, res)
-})
+
 
 export default router;

@@ -19,4 +19,8 @@ const follow = connection.define('followers', {
     },
 });
 
+follow.associate = function (models) {
+    follow.belongsTo(models.user, { foreignKey: 'userId' });
+};
+
 export default follow;

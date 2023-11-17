@@ -6,9 +6,10 @@ import userModel from "../../../models/user.js";
 import tagModel from "../../../models/tag.js";
 import post_tagModel from "../../../models/post_tag.js";
 
-export default async function get(req, res) {
+export default async function getById(req, res) {
     try {
         const post = await postModel.findOne({
+            where: { id: req.params.id },
             include: [
                 userModel,
                 {

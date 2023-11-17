@@ -5,6 +5,7 @@ import user from './user.js';
 import comment from './comment.js';
 import like from './like.js';
 import tag from './tag.js';
+import follow from './follow.js';
 import post_tag from './post_tag.js';
 
 const post = connection.define("posts", {
