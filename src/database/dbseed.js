@@ -36,26 +36,31 @@ const testPosts = [
         title: "My first post",
         content: "This is the content of my first post.",
         userId: 1,
+        image: null
     },
     {
         title: "My second post",
         content: "This is the content of my second post.",
         userId: 2,
+        image: ""
     },
     {
         title: "My third post",
         content: "This is the content of my third post.",
         userId: 1,
+        image: null
     },
     {
         title: "My fourth post",
         content: "This is the content of my fourth post.",
         userId: 2,
+        image: null
     },
     {
         title: "My fifth post",
         content: "This is the content of my fifth post.",
         userId: 1,
+        image: null
     },
 ];
 

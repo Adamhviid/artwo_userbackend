@@ -31,6 +31,10 @@ const post = connection.define("posts", {
             key: 'id',
         },
     },
+    image: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
     deletedAt: {
         type: DataTypes.DATE,
         allowNull: true,
