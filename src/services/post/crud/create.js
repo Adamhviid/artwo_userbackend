@@ -3,9 +3,9 @@ import tagModel from "../../../models/tag.js";
 import post_tagModel from "../../../models/post_tag.js";
 import azureStorage from "azure-storage";
 
-const storageAccount = 'artwoowners';
-const accessKey = 'Tk3y0ORXGsWRpn4na0m6UXWl3UH4iVR0fSgfFUdtlERXnvJx2lI8IqTW/mCkhr7IuNrKQtoGS13z+AStFuNajQ==';
-const containerName = 'posts';
+const storageAccount = process.env.AZURE_STORAGE_ACCOUNT;
+const accessKey = process.env.AZURE_STORAGE_ACCESSKEY
+const containerName = process.env.AZURE_STORAGE_CONTAINERNAME
 const blobService = azureStorage.createBlobService(storageAccount, accessKey);
 
 export default async function create(req, res) {
