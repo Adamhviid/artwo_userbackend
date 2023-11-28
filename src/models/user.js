@@ -1,6 +1,8 @@
 import { DataTypes } from 'sequelize';
 import connection from "../database/connection.js"
 
+import follow from './follow.js';
+
 const user = connection.define('users', {
     id: {
         type: DataTypes.INTEGER,
@@ -57,5 +59,7 @@ const user = connection.define('users', {
         }
     ]
 });
+
+user.hasMany(follow, { foreignKey: 'userId' });
 
 export default user;

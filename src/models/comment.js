@@ -1,8 +1,8 @@
 import { DataTypes } from "sequelize";
 import connection from "../database/connection.js";
 
-import Post from './post.js';
-import User from './user.js';
+import post from './post.js';
+import user from './user.js';
 
 const comment = connection.define("comment", {
     id: {
@@ -15,17 +15,13 @@ const comment = connection.define("comment", {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: User,
+            model: user,
             key: 'id',
         },
     },
     postId: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        references: {
-            model: Post,
-            key: 'id',
-        },
     },
     content: {
         type: DataTypes.STRING,
@@ -42,5 +38,7 @@ const comment = connection.define("comment", {
         }
     ]
 });
+
+comment.belongsTo(user, { foreignKey: 'userId' });
 
 export default comment;
