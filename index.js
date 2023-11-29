@@ -6,6 +6,8 @@ import user from "./src/routes/user.js";
 import post from "./src/routes/post.js";
 import search from "./src/routes/search.js";
 
+import consumePosts from './src/services/rabbitmq/consumePosts.js';
+
 const app = express();
 
 app.use(cors());
@@ -19,6 +21,8 @@ app.use("/search", search);
 app.get("/bruh", (req, res) => {
     res.send("Hello World!");
 });
+
+consumePosts();
 
 app.listen(process.env.PORT || 8080, () => {
     console.log(`Server listening on port ${process.env.PORT || 8080}...`);

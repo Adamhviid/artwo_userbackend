@@ -31,7 +31,8 @@
         "mysql2": "^3.6.3",
         "regex": "^0.1.1",
         "sequelize": "^6.34.0",
-        "tedious": "^16.6.0"
+        "tedious": "^16.6.0",
+        "uuid": "^9.0.1"
     },
     "devDependencies": {
         "@babel/core": "^7.23.3",
