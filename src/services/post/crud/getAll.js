@@ -13,6 +13,9 @@ export default async function getAll(req, res) {
         const postPages = await postModel.count();
 
         const posts = await postModel.findAll({
+            where: {
+                deletedAt: null
+            },
             include: [
                 userModel,
                 {

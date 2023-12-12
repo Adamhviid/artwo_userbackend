@@ -9,6 +9,9 @@ import post_tagModel from "../../../models/post_tag.js";
 export default async function getByTag(req, res) {
     try {
         const posts = await postModel.findAll({
+            where: {
+                deletedAt: null
+            },
             include: [
                 userModel,
                 {

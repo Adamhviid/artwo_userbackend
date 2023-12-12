@@ -6,7 +6,7 @@ import user from "./src/routes/user.js";
 import post from "./src/routes/post.js";
 import search from "./src/routes/search.js";
 
-import consumePosts from './src/services/rabbitmq/consumePosts.js';
+import { consumePosts, consumePostDeletion } from './src/services/rabbitmq/posts.js';
 
 const app = express();
 
@@ -22,7 +22,9 @@ app.get("/bruh", (req, res) => {
     res.send("Hello World!");
 });
 
+//rabbitmq consumers
 consumePosts();
+consumePostDeletion();
 
 app.listen(process.env.PORT || 8080, () => {
     console.log(`Server listening on port ${process.env.PORT || 8080}...`);

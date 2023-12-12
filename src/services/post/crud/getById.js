@@ -10,6 +10,9 @@ export default async function getById(req, res) {
     try {
         const post = await postModel.findOne({
             where: { id: req.params.id },
+            where: {
+                deletedAt: null
+            },
             include: [
                 userModel,
                 {
