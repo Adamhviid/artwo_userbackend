@@ -6,7 +6,7 @@ import getAll from "../services/post/crud/getAll.js";
 import getById from "../services/post/crud/getById.js";
 import getByTag from "../services/post/crud/getByTag.js";
 import update from "../services/post/crud/update.js";
-/* import create from "../services/post/crud/create.js"; */
+import create from "../services/post/crud/create.js";
 import like from "../services/post/likes/like.js";
 import unlike from "../services/post/likes/unlike.js";
 import comment from "../services/post/commenting/comment.js";
@@ -42,9 +42,9 @@ router.put("/update/:id", verifyToken, async (req, res) => {
     update(req, res)
 });
 
-/* router.post("/create", upload.single('image'), verifyToken, async (req, res) => {
+router.post("/create", upload.single('image'), verifyToken, async (req, res) => {
     create(req, res)
-}); */
+});
 
 router.post("/like/:id", verifyToken, async (req, res) => {
     like(req, res)

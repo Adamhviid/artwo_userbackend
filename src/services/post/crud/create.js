@@ -1,63 +1,61 @@
 import postModel from "../../../models/post.js";
-import amqp from 'amqplib/callback_api';
 import tagModel from "../../../models/tag.js";
 import post_tagModel from "../../../models/post_tag.js";
-/* import azureStorage from "azure-storage";
+import azureStorage from "azure-storage";
 
 const storageAccount = process.env.AZURE_STORAGE_ACCOUNT;
 const accessKey = process.env.AZURE_STORAGE_ACCESSKEY
 const containerName = process.env.AZURE_STORAGE_CONTAINERNAME
-const blobService = azureStorage.createBlobService(storageAccount, accessKey); */
+const blobService = azureStorage.createBlobService(storageAccount, accessKey);
 
-const connectionString = process.env.RABBITMQ_CONNECTION_STRING;
+export default async function create(req, res) {
+    try {
+        const { title, content, userId } = req.body;
+        const tags = JSON.parse(req.body.tags);
+        let blobURL = null;
+        
+        if (req.file) {
+            const blobName = req.file.originalname;
+            const stream = new Buffer.from(req.file.buffer);
 
-console.log("inside create.js");
-amqp.connect(connectionString, (err, connection) => {
-    console.log("connected to rabbitmq");
-    if (err) {
-        throw err;
-    }
+            blobURL = await new Promise((resolve, reject) => {
+                blobService.createBlockBlobFromText(containerName, blobName, stream, stream.length, (error, result, response) => {
+                    if (error) {
+                        console.error(error);
+                        reject('Error uploading image to Azure Blob Storage');
+                    }
 
-    connection.createChannel(async (err, channel) => {
-        if (err) {
-            throw err;
+                    resolve(blobService.getUrl(containerName, blobName));
+                });
+            });
         }
 
-        const queueName = 'posts';
-
-        channel.assertQueue(queueName, {
-            durable: false
+        const newPost = await postModel.create({
+            title,
+            content,
+            userId,
+            image: blobURL,
         });
 
-        console.log(`Waiting for messages in ${queueName}`);
-
-        channel.consume(queueName, async (msg) => {
-            const data = JSON.parse(msg.content.toString());
-
-            const newPost = await postModel.create({
-                title: data.title,
-                content: data.content,
-                userId: data.userId,
-                imageUrl: data.imageUrl,
+        const tagInstances = await Promise.all(tags.map(async (tag) => {
+            const [tagInstance] = await tagModel.findOrCreate({
+                where: { tag }
             });
-            const tagInstances = await Promise.all(data.tags.map(async (tag) => {
-                const [tagInstance] = await tagModel.findOrCreate({
-                    where: { tag }
-                });
-                return tagInstance;
-            }));
+            return tagInstance;
+        }));
 
-            const tag_posts = tagInstances.map(tagInstance => {
-                return post_tagModel.create({
-                    postId: newPost.id,
-                    tagId: tagInstance.id,
-                });
+        const tag_posts = tagInstances.map(tagInstance => {
+            return post_tagModel.create({
+                postId: newPost.id,
+                tagId: tagInstance.id,
             });
-
-            await Promise.all(tag_posts);
-
-            console.log("Post, tags, and jointable created");
-            channel.ack(msg);
         });
-    });
-});
+
+        await Promise.all(tag_posts);
+
+        res.status(200).json("Post, tags, and jointable created");
+
+    } catch (err) {
+        res.status(500).json(err.message);
+    }
+}
