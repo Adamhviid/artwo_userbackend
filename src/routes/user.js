@@ -7,6 +7,7 @@ import update from '../services/user/crud/update.js'
 import login from "../services/user/auth/login.js";
 import register from "../services/user/auth/register.js";
 import follow from "../services/user/follow.js";
+import getMegaChat from "../services/chat/getMegaChat.js";
 
 import verifyToken from "../middleware/verifyToken.js";
 
@@ -40,6 +41,10 @@ router.put("/update/:id", verifyToken, async (req, res) => {
 
 router.post("/follow/:id", verifyToken, async (req, res) => {
     follow(req, res)
+})
+
+router.get("/chat", async (req, res) => {
+    getMegaChat(req, res)
 })
 
 export default router;

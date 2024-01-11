@@ -2,6 +2,7 @@ import { DataTypes } from 'sequelize';
 import connection from "../database/connection.js"
 
 import follow from './follow.js';
+import chat from './chat.js';
 
 const user = connection.define('users', {
     id: {
@@ -61,5 +62,6 @@ const user = connection.define('users', {
 });
 
 user.hasMany(follow, { foreignKey: 'userId' });
+user.hasMany(chat, { foreignKey: 'userId' });
 
 export default user;

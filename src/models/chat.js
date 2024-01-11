@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
 import connection from "../database/connection.js";
+
 import user from './user.js';
 
 const chat = connection.define("chats", {
@@ -11,10 +12,11 @@ const chat = connection.define("chats", {
     },
     userId: {
         type: DataTypes.INTEGER,
-        references: {
-            model: user,
-            key: 'id',
-        },
+        allowNull: false,
+    },
+    username: {
+        type: DataTypes.STRING,
+        allowNull: false,
     },
     content: {
         type: DataTypes.TEXT,

@@ -33,7 +33,7 @@ app.listen(process.env.PORT || 8080, () => {
     console.log(`Server listening on port ${process.env.PORT || 8080}...`);
 });
 
-/* import chat from './src/models/chat.js';
+import chat from './src/models/chat.js';
 
 const server = http.createServer();
 const ws = new WebSocketServer({ server });
@@ -46,25 +46,23 @@ server.listen(port, () => {
 const clients = {};
 
 ws.on('connection', function (connection) {
-    const userId = uuidv4();
-    clients[userId] = connection;
-    console.log(`${userId} connected. Total clients: ${Object.keys(clients).length}`);
-
     connection.on('message', async (message) => {
         const data = JSON.parse(message);
-        console.log(data);
-        ws.clients.forEach((client) => {
-            client.send(`[${data.time}] ${data.username}: ${data.message}`);
-        });
-
+        const userId = data.userId;
+        clients[userId] = connection;
+        console.log(`${userId} connected. Total clients: ${Object.keys(clients).length}`);
+        
         try {
-            await chat.create({
+            const message = await chat.create({
                 userId: data.userId,
+                username: data.username,
                 content: data.message,
             });
-            console.log('Chat message saved successfully');
+            ws.clients.forEach((client) => {
+                client.send(`[${message.createdAt}] ${data.username}: ${data.message}`);
+            });
         } catch (error) {
             console.error('Failed to save chat message:', error);
         }
     });
-}); */
+});
