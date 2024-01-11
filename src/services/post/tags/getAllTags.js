@@ -1,28 +1,38 @@
 import tagModel from '../../../models/tag.js';
 import post_tagModel from '../../../models/post_tag.js';
+import postModel from '../../../models/post.js';
 
 export default async function getAllTags(req, res) {
     try {
-        const allTags = await post_tagModel.findAll({
-            attributes: ['tagId'],
+        const allPosts = await postModel.findAll({
+            where: {
+                deletedAt: null
+            },
+            include: [
+                {
+                    model: tagModel,
+                    through: {
+                        model: post_tagModel,
+                        attributes: [],
+                    },
+                },
+            ],
         });
 
-        const tagCounts = allTags.reduce((counts, tag) => {
-            if (!counts[tag.tagId]) {
-                counts[tag.tagId] = 0;
-            }
-            counts[tag.tagId]++;
+        const tagCounts = allPosts.reduce((counts, post) => {
+            post.tags.forEach(tag => {
+                const foundTag = counts.find(t => t.tag === tag.tag);
+                if (foundTag) {
+                    foundTag.count++;
+                } else {
+                    counts.push({ tag: tag.tag, count: 1 });
+                }
+            });
             return counts;
-        }, {});
-
-        const result = await Promise.all(Object.entries(tagCounts).map(async ([tagId, count]) => {
-            const tag = await tagModel.findByPk(tagId);
-            return { tag: tag.tag, count };
-        }));
-
-        result.sort((a, b) => b.count - a.count);
-
-        res.status(200).json(result);
+        }, []);
+        
+        tagCounts.sort((a, b) => b.count - a.count);
+        res.status(200).json(tagCounts);
 
     } catch (err) {
         res.status(500).json(err);
