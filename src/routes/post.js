@@ -39,7 +39,7 @@ router.get("/get/tag/:tag", async (req, res) => {
     getByTag(req, res)
 });
 
-router.delete("/delete/:id", verifyToken, async (req, res) => {
+router.put("/delete/:id", async (req, res) => {
     deleteById(req, res)
 });
 

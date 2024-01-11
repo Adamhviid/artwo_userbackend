@@ -5,11 +5,7 @@ export default async function deleteById(req, res) {
         const id = req.params.id;
 
         return await postModel
-            .destroy({
-                where: {
-                    id: id,
-                },
-            })
+            .update({ deletedAt: new Date() }, { where: { id } })
             .then(() => {
                 return res.status(200).json("Post deleted successfully");
             })
