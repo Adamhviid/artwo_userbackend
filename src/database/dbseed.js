@@ -5,6 +5,7 @@ import user from '../models/user.js';
 import follow from '../models/follow.js';
 import tag from '../models/tag.js';
 import post_tag from '../models/post_tag.js';
+import chat from '../models/chat.js';
 
 import Connection from './connection.js';
 
@@ -109,6 +110,7 @@ async function dbSeed() {
         comment.belongsTo(post, { foreignKey: 'postId' });
         comment.belongsTo(user, { foreignKey: 'userId' });
 
+        chat.belongsTo(user, { foreignKey: 'userId' });
 
         await Connection.sync();
 
